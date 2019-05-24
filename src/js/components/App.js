@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import '../../styles/styles.css';
+import ScoreBoardList from './ScoreBoardList';
 
 class App extends Component {
   constructor() {
@@ -31,7 +32,9 @@ class App extends Component {
           y: 0
         },
         tail: [0, 0, 0]
-      }
+      },
+      score: [],
+      numberOfGames: 1
     }
   }
 
@@ -163,7 +166,7 @@ class App extends Component {
           }
         }
       }))
-    } else if (event.keyCode === 39) {
+    } else if (event.keyCode === 39)  {
       if (squirrel.velocity.x === -1) return;
       this.setState(({squirrel}) => ({
         squirrel: {
@@ -174,7 +177,7 @@ class App extends Component {
           }
         }
       }))
-    } else if (event.keyCode === 37) {
+    } else if (event.keyCode === 37)  {
       if (squirrel.velocity.x === 1) return;
       this.setState(({squirrel}) => ({
         squirrel: {
@@ -205,21 +208,28 @@ class App extends Component {
           y: 0
         },
         tail: [0, 0, 0]
-      },
-      score: [],
-      numberOfGames: 1
+      }
     }, () => {
       this.gameLoop();
     })
   }
 
   renderGameOverView = () => {
-    const { squirrel } = this.state;
     const { squirrel, score, numberOfGames } = this.state;
     console.log("scoreBoard: ", score);
     return (
       <div className="GameOver-root container">
         <h1>Juego terminado! Tu puntaje fue: {squirrel.tail.length - 3}</h1>
+        <div>
+          {
+            score.map((sco, key) => {
+              return (
+                <div key={key}>{sco.scoreKey} ==> {sco.scoreValue}</div>
+              )
+            })
+          }
+        </div>
+        {this.renderScoresResult()}
         <div onClick={this.restartGame}>Jugar de nuevo!</div>
       </div>
     );
@@ -249,6 +259,14 @@ class App extends Component {
       </div>
 
     )
+  }
+
+  renderScoresResult() {
+    return (
+      <ScoreBoardList
+        scores={this.state.score}
+      />
+    );
   }
 
   render() {
