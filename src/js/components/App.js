@@ -39,9 +39,13 @@ class App extends Component {
     document.addEventListener('keydown', (e) => {
       this.setVelocity(e);
     });
+    this.settingTimeOut();
+  }
+
+  settingTimeOut = () => {
     setTimeout(() => {
       this.gameLoop()
-    }, 1000);
+    }, this.state.squirrel.tail.length ? (400 / this.state.squirrel.tail.length) + 200 : 400);
   }
 
   getRandomFood = () => {
@@ -79,7 +83,37 @@ class App extends Component {
       if (!collidesWithFood) nextState.squirrel.tail.pop();
 
       return nextState;
+    }, () => {
+      const { squirrel, score, numberOfGames } = this.state;
+      if (this.isOffEdge() || this.isTail(squirrel.head)) {
+        const newScore = {
+          scoreKey: 'Puntaje ' + numberOfGames,
+          scoreValue: squirrel.tail.length - 3
+        };
+
+        this.setState(({gameOver, score, numberOfGames}) => ({
+          gameOver: true,
+          score: [
+            ...score,
+            newScore
+          ],
+          numberOfGames: numberOfGames + 1
+        }))
+        return;
+      }
+      this.settingTimeOut();
     });
+  }
+
+  isOffEdge = () => {
+    const { squirrel } = this.state;
+
+    if (squirrel.head.col > 15
+      || squirrel.head.col < 0
+      || squirrel.head.row > 15
+      || squirrel.head.row < 0) {
+        return true;
+      }
   }
 
   collidesWithFood = () => {
@@ -171,7 +205,9 @@ class App extends Component {
           y: 0
         },
         tail: [0, 0, 0]
-      }
+      },
+      score: [],
+      numberOfGames: 1
     }, () => {
       this.gameLoop();
     })
@@ -179,7 +215,8 @@ class App extends Component {
 
   renderGameOverView = () => {
     const { squirrel } = this.state;
-
+    const { squirrel, score, numberOfGames } = this.state;
+    console.log("scoreBoard: ", score);
     return (
       <div className="GameOver-root container">
         <h1>Juego terminado! Tu puntaje fue: {squirrel.tail.length - 3}</h1>
