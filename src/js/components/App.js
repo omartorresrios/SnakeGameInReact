@@ -106,7 +106,7 @@ class App extends Component {
           ...squirrel,
           velocity: {
             x: 0,
-            y: -1,
+            y: 1,
           }
         }
       }))
@@ -117,7 +117,7 @@ class App extends Component {
           ...squirrel,
           velocity: {
             x: 0,
-            y: 1,
+            y: -1,
           }
         }
       }))
@@ -127,7 +127,7 @@ class App extends Component {
         squirrel: {
           ...squirrel,
           velocity: {
-            x: 1,
+            x: -1,
             y: 0,
           }
         }
@@ -138,7 +138,7 @@ class App extends Component {
         squirrel: {
           ...squirrel,
           velocity: {
-            x: -1,
+            x: 1,
             y: 0,
           }
         }
