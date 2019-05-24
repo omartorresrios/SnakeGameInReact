@@ -63,7 +63,7 @@ class App extends Component {
     if (this.state.gameOver) return;
 
     this.setState(({squirrel, food}) => {
-
+      const collidesWithFood = this.collidesWithFood();
       const nextState = {
         squirrel: {
           ...squirrel,
@@ -73,11 +73,19 @@ class App extends Component {
           },
           tail: [squirrel.head, ...squirrel.tail]
         },
-        food: this.getRandomFood()
+        food: collidesWithFood ? this.getRandomFood() : food
       };
+
+      if (!collidesWithFood) nextState.squirrel.tail.pop();
 
       return nextState;
     });
+  }
+
+  collidesWithFood = () => {
+    const { food, squirrel } = this.state;
+    return food.row === squirrel.head.row
+      && food.col === squirrel.head.col;
   }
 
   isFood = (cell) => {
