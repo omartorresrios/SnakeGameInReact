@@ -146,34 +146,73 @@ class App extends Component {
     }
   }
 
-  render() {
-    const { grid, snake, gameOver } = this.state;
+  restartGame = () => {
+    this.setState({
+      gameOver: false,
+      food: {
+        row: Math.floor(Math.random() * 16),
+        col: Math.floor(Math.random() * 16),
+      },
+      squirrel: {
+        head: {
+          row: 6,
+          col: 6
+        },
+        velocity: {
+          x: 1,
+          y: 0
+        },
+        tail: [0, 0, 0]
+      }
+    }, () => {
+      this.gameLoop();
+    })
+  }
+
+  renderGameOverView = () => {
+    const { squirrel } = this.state;
+
     return (
-      <div className="App">
-        {
-          gameOver
-          ? <h1>Perdiste! Tu puntaje fue: {snake.tail.length + 1}!</h1>
-          : <section className="grid">
-        {
-          grid.map((row, i) => (
-            row.map(cell => (
-              <div key={`${cell.row} ${cell.col}`} className={`cell
-                ${
-                  this.isHead(cell)
-                  ? 'head' : this.isFood(cell)
-                  ? 'food' : this.isTail(cell)
-                  ? 'tail' : ''
-                  }`
-                }>
-              </div>
-            ))
-          ))
-        }
-        </section>
-        }
+      <div className="GameOver-root container">
+        <h1>Juego terminado! Tu puntaje fue: {squirrel.tail.length - 3}</h1>
+        <div onClick={this.restartGame}>Jugar de nuevo!</div>
       </div>
     );
+  }
 
+  renderGridView = () => {
+    const { grid } = this.state;
+    return (
+      <div className="App container">
+        <section className="grid">
+          {
+            grid.map((row, i) => (
+              row.map(cell => (
+                <div key={`${cell.row} ${cell.col}`} className={`cell
+                  ${
+                    this.isHead(cell)
+                    ? 'head' : this.isFood(cell)
+                    ? 'food' : this.isTail(cell)
+                    ? 'tail' : ''
+                    }`
+                  }>
+                </div>
+              ))
+            ))
+          }
+        </section>
+      </div>
+
+    )
+  }
+
+  render() {
+    const { gameOver } = this.state;
+    return (
+      <div>
+        {gameOver ? this.renderGameOverView() : this.renderGridView()}
+      </div>
+    );
   }
 }
 
