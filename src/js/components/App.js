@@ -215,22 +215,12 @@ class App extends Component {
   }
 
   renderGameOverView = () => {
-    const { squirrel, score, numberOfGames } = this.state;
-    console.log("scoreBoard: ", score);
+    const { squirrel } = this.state;
     return (
-      <div className="GameOver-root container">
-        <h1>Juego terminado! Tu puntaje fue: {squirrel.tail.length - 3}</h1>
-        <div>
-          {
-            score.map((sco, key) => {
-              return (
-                <div key={key}>{sco.scoreKey} ==> {sco.scoreValue}</div>
-              )
-            })
-          }
-        </div>
+      <div className="GameOver-root__Container container">
+        <h1>Perdiste 🙁 - tu puntaje fue {squirrel.tail.length - 3}</h1>
         {this.renderScoresResult()}
-        <div onClick={this.restartGame}>Jugar de nuevo!</div>
+        <div className="GameOver-root__TryAgain" onClick={this.restartGame}>Jugar de nuevo!</div>
       </div>
     );
   }
@@ -257,7 +247,6 @@ class App extends Component {
           }
         </section>
       </div>
-
     )
   }
 
@@ -272,7 +261,7 @@ class App extends Component {
   render() {
     const { gameOver } = this.state;
     return (
-      <div>
+      <div className={`${gameOver ? 'GameOver-root' : ''}`}>
         {gameOver ? this.renderGameOverView() : this.renderGridView()}
       </div>
     );

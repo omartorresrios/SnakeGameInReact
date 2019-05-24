@@ -3,10 +3,14 @@
   flex-direction: column;
   text-align: center;
   width: 100%;
-  max-width: 600px;
+  max-width: 300px;
   margin: 40px auto;
   border: 1px solid #efefef;
   background-color: #fff;
   border-radius: 2px;
   box-shadow: 0 1px 4px rgba(0,0,0,.04);
+}
+
+.ScoreBoardList__root h4 {
+  margin: 10px 20px;
 }
