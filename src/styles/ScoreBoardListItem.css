@@ -1,0 +1,14 @@
+.ScoreBoardListItem-root {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 20px;
+}
+
+.ScoreBoardListItem-root__ScoreKey {
+  
+}
+
+.ScoreBoardListItem-root__ScoreValue {
+  margin-left: auto;
+}
