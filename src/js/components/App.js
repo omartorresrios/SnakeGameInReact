@@ -24,8 +24,8 @@ class App extends Component {
       },
       squirrel: {
         head: {
-          row: 6,
-          col: 6
+          row: 4,
+          col: 4
         },
         velocity: {
           x: 1,
@@ -111,10 +111,7 @@ class App extends Component {
   isOffEdge = () => {
     const { squirrel } = this.state;
 
-    if (squirrel.head.col > 15
-      || squirrel.head.col < 0
-      || squirrel.head.row > 15
-      || squirrel.head.row < 0) {
+    if (squirrel.head.col > 15 || squirrel.head.col < 0 || squirrel.head.row > 15 || squirrel.head.row < 0) {
         return true;
       }
   }
@@ -156,38 +153,38 @@ class App extends Component {
         }
       }))
     } else if (event.keyCode === 40) {
-      if (squirrel.velocity.y === -1) return;
-      this.setState(({squirrel}) => ({
-        squirrel: {
-          ...squirrel,
-          velocity: {
-            x: 0,
-            y: -1,
+        if (squirrel.velocity.y === -1) return;
+        this.setState(({squirrel}) => ({
+          squirrel: {
+            ...squirrel,
+            velocity: {
+              x: 0,
+              y: -1,
+            }
           }
-        }
-      }))
+        }))
     } else if (event.keyCode === 39)  {
-      if (squirrel.velocity.x === -1) return;
-      this.setState(({squirrel}) => ({
-        squirrel: {
-          ...squirrel,
-          velocity: {
-            x: -1,
-            y: 0,
+        if (squirrel.velocity.x === -1) return;
+        this.setState(({squirrel}) => ({
+          squirrel: {
+            ...squirrel,
+            velocity: {
+              x: -1,
+              y: 0,
+            }
           }
-        }
-      }))
+        }))
     } else if (event.keyCode === 37)  {
-      if (squirrel.velocity.x === 1) return;
-      this.setState(({squirrel}) => ({
-        squirrel: {
-          ...squirrel,
-          velocity: {
-            x: 1,
-            y: 0,
+        if (squirrel.velocity.x === 1) return;
+        this.setState(({squirrel}) => ({
+          squirrel: {
+            ...squirrel,
+            velocity: {
+              x: 1,
+              y: 0,
+            }
           }
-        }
-      }))
+        }))
     }
   }
 
@@ -200,8 +197,8 @@ class App extends Component {
       },
       squirrel: {
         head: {
-          row: 6,
-          col: 6
+          row: 4,
+          col: 4
         },
         velocity: {
           x: 1,
@@ -220,8 +217,14 @@ class App extends Component {
       <div className="GameOver-root__Container container">
         <h1>Perdiste 🙁 - tu puntaje fue {squirrel.tail.length - 3}</h1>
         {this.renderScoresResult()}
-        <div className="GameOver-root__TryAgain" onClick={this.restartGame}>Jugar de nuevo!</div>
+        <div className="GameOver-root__TryAgain" onClick={this.restartGame}>¡Jugar de nuevo! 😀</div>
       </div>
+    );
+  }
+
+  renderScoresResult = () => {
+    return (
+      <ScoreBoardList scores={this.state.score} />
     );
   }
 
@@ -250,18 +253,10 @@ class App extends Component {
     )
   }
 
-  renderScoresResult() {
-    return (
-      <ScoreBoardList
-        scores={this.state.score}
-      />
-    );
-  }
-
   render() {
     const { gameOver } = this.state;
     return (
-      <div className={`${gameOver ? 'GameOver-root' : ''}`}>
+      <div className={`${gameOver ? 'GameOver-root' : 'GridView-root'}`}>
         {gameOver ? this.renderGameOverView() : this.renderGridView()}
       </div>
     );
